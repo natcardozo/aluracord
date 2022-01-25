@@ -1,35 +1,8 @@
 import { useState } from 'react';
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
+import { useRouter } from 'next/router';
 import appConfig from '../config.json';
-
-function GlobalStyle() {
-    return (
-      <style global jsx>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          list-style: none;
-        }
-        body {
-          font-family: 'Open Sans', sans-serif;
-        }
-        /* App fit Height */ 
-        html, body, #__next {
-          min-height: 100vh;
-          display: flex;
-          flex: 1;
-        }
-        #__next {
-          flex: 1;
-        }
-        #__next > * {
-          flex: 1;
-        }
-        /* ./App fit Height */ 
-      `}</style>
-    );
-  }
+import React from 'react';
 
 function Titulo(props) {
     const Tag = props.tag || 'h1';
@@ -61,19 +34,19 @@ function Titulo(props) {
   export default HomePage */
 
 export default function PaginaInicial() {
-    const [githubUser, setGithubUser] = useState();
+    const [githubUser, setGithubUser] = useState('');
+    const roteamento = useRouter();
 
-    function handleChange(props) {
-        const target = props.target;
-        setGithubUser(target.value);
+    function handleChange(e) {
+        const valor = e.target.value;
+        setGithubUser(valor);
     }
 
     return (
         <>
-            <GlobalStyle />
             <Box
                 styleSheet={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                 backgroundColor: appConfig.theme.colors.primary[500],
                 backgroundImage: 'url(https://i.imgur.com/lwu3vh0.png)',
                 backgroundRepeat: 'repeat', backgroundSize: '500px', backgroundBlendMode: 'multiply',
@@ -98,6 +71,10 @@ export default function PaginaInicial() {
                 {/* Formulário */}
                 <Box
                     as="form"
+                    onSubmit={function (e) {
+                        e.preventDefault()
+                        roteamento.push('/chat')
+                    }}
                     styleSheet={{
                     display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                     width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
@@ -110,7 +87,8 @@ export default function PaginaInicial() {
 
                     <TextField
                         onChange={handleChange}
-                        placeholder='Insira seu usuário do github'
+                        placeholder='Insira o seu usuário do github'
+                        value={githubUser}
                         fullWidth
                         textFieldColors={{
                         neutral: {
@@ -157,13 +135,16 @@ export default function PaginaInicial() {
                         borderRadius: '50%',
                         marginBottom: '16px',
                     }}
-                    src={`https://github.com/${githubUser}.png`}
+                    src={githubUser.length >= 2 ? `https://github.com/${githubUser}.png` : 'https://i.imgur.com/O1zaVNB.png'}
                     />
                     <Text
                     variant="body4"
                     styleSheet={{
                         color: appConfig.theme.colors.neutrals[800],
                         backgroundColor: appConfig.theme.colors.neutrals[100],
+                        width: '75%',
+                        height: '25px',
+                        textAlign: 'center',
                         padding: '3px 10px',
                         borderRadius: '1000px'
                     }}
@@ -172,6 +153,113 @@ export default function PaginaInicial() {
                     </Text>
                 </Box>
                 {/* Photo Area */}
+                </Box>
+                {/* Seguidores */}
+                <Box 
+                styleSheet={{
+                    display: 'inline',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    width: '100%', maxWidth: '700px',
+                    borderRadius: '5px', 
+                    paddingHorizontal: '32px', 
+                    paddingVertical: '10px', 
+                    margin: '16px',
+                    boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
+                    backgroundColor: appConfig.theme.colors.neutrals['050'],
+                    opacity: '90%',
+                }}
+                >
+                    <Box
+                    styleSheet={{
+                        display: 'inline-block',
+                        textAlign: 'center',
+                        margin: 'auto',
+                    }}>
+                        <h3>Seguindo</h3>
+                    </Box>
+                    <Box
+                    styleSheet={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        textAlign: 'center',
+                        margin: 'auto',
+                        marginTop: '5px'
+                    }}>
+                        <Image 
+                        styleSheet={{
+                            width: '50px',
+                            backgroundColor: appConfig.theme.colors.neutrals['200'],
+                            minHeight: '50px',
+                            borderRadius: '50%',
+                            transition: '1s',
+                            hover: {
+                                cursor: 'pointer',
+                                transform: 'rotate(360deg)',
+                            }
+                        }} src={githubUser.length >= 2 ? `https://github.com/omariosouto.png` : 'https://i.imgur.com/O1zaVNB.png'} />
+                        <Image 
+                        styleSheet={{
+                            width: '50px',
+                            backgroundColor: appConfig.theme.colors.neutrals['200'],
+                            minHeight: '50px',
+                            borderRadius: '50%',
+                            transition: '1s',
+                            hover: {
+                                cursor: 'pointer',
+                                transform: 'rotate(360deg)',
+                            }
+                        }} src={githubUser.length >= 2 ? `https://github.com/peas.png` : 'https://i.imgur.com/O1zaVNB.png'} />
+                        <Image 
+                        styleSheet={{
+                            width: '50px',
+                            backgroundColor: appConfig.theme.colors.neutrals['200'],
+                            minHeight: '50px',
+                            borderRadius: '50%',
+                            transition: '1s',
+                            hover: {
+                                cursor: 'pointer',
+                                transform: 'rotate(360deg)',
+                            }
+                        }} src={githubUser.length >= 2 ? `https://github.com/alura.png` : 'https://i.imgur.com/O1zaVNB.png'} />
+                        <Image 
+                        styleSheet={{
+                            width: '50px',
+                            backgroundColor: appConfig.theme.colors.neutrals['200'],
+                            minHeight: '50px',
+                            borderRadius: '50%',
+                            transition: '1s',
+                            hover: {
+                                cursor: 'pointer',
+                                transform: 'rotate(360deg)',
+                            }
+                        }} src={githubUser.length >= 2 ? `https://github.com/rafaballerini.png` : 'https://i.imgur.com/O1zaVNB.png'} />
+                        <Image 
+                        styleSheet={{
+                            width: '50px',
+                            backgroundColor: appConfig.theme.colors.neutrals['200'],
+                            minHeight: '50px',
+                            borderRadius: '50%',
+                            transition: '1s',
+                            hover: {
+                                cursor: 'pointer',
+                                transform: 'rotate(360deg)',
+                            }
+                        }} src={githubUser.length >= 2 ? `https://github.com/juunegreiros.png` : 'https://i.imgur.com/O1zaVNB.png'} />
+                        <Image 
+                        styleSheet={{
+                            width: '50px',
+                            backgroundColor: appConfig.theme.colors.neutrals['200'],
+                            minHeight: '50px',
+                            borderRadius: '50%',
+                            transition: '1s',
+                            hover: {
+                                cursor: 'pointer',
+                                transform: 'rotate(360deg)',
+                            }
+                        }} src={githubUser.length >= 2 ? `https://github.com/loresgarcia.png` : 'https://i.imgur.com/O1zaVNB.png'} />
+                    </Box>
                 </Box>
             </Box>
         </>
