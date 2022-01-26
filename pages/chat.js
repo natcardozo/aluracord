@@ -55,7 +55,7 @@ export default function ChatPage() {
                 >
 
                     {/* <MessageList mensagens={[]} /> */}
-                    <MessageList mensagens = {listaDeMensagens} />
+                    <MessageList mensagens = {listaDeMensagens} setMensagens={setListaDeMensagens} />
                     {/* {listaDeMensagens.map((mensagemAtual) => {
                         return (
                             <li key={mensagemAtual.id}>
@@ -132,6 +132,13 @@ function Header() {
 }
 
 function MessageList(props) {
+    function Remover(mensagem) {
+        const novaListaDeMensagens = props.mensagens.filter((mensagemRemover) =>{
+            return mensagem.id !== mensagemRemover.id
+        })
+        props.setMensagens(novaListaDeMensagens)
+    }
+
     return (
         <Box
             tag="ul"
@@ -160,6 +167,7 @@ function MessageList(props) {
                     >
                         <Box
                             styleSheet={{
+                                display: 'flex',
                                 marginBottom: '8px',
                             }}
                         >
@@ -186,6 +194,23 @@ function MessageList(props) {
                             >
                                 {(new Date().toLocaleDateString())}
                             </Text>
+                                <Button 
+                                    label='X'
+                                    type='button'
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        Remover(mensagem);
+                                    }}
+                                    styleSheet={{
+                                        height: '10px',
+                                        width: '10px',
+                                        marginLeft: '5%',
+                                        backgroundColor: appConfig.theme.colors.neutrals[800],
+                                        hover: {
+                                            backgroundColor: appConfig.theme.colors.neutrals[999],
+                                        }
+                                    }}
+                                />
                         </Box>
                         {mensagem.texto}
                     </Text>
