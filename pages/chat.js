@@ -71,16 +71,7 @@ export default function ChatPage() {
                         padding: '16px',
                     }}
                 >
-
-                    {/* <MessageList mensagens={[]} /> */}
                     <MessageList mensagens = {listaDeMensagens} setMensagens={setListaDeMensagens} />
-                    {/* {listaDeMensagens.map((mensagemAtual) => {
-                        return (
-                            <li key={mensagemAtual.id}>
-                                {mensagemAtual.remetente} : {mensagemAtual.texto}
-                            </li>
-                        )
-                    })} */}
 
                     <Box
                         as="form"
@@ -124,6 +115,32 @@ export default function ChatPage() {
                                 handleNovaMensagem(mensagem);
                             }}
                         />
+                    </Box>
+                    <Box
+                        styleSheet={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'right',
+                            marginRight: '5%',
+                            marginLeft: '5px'
+                        }}
+                        >
+                            <Image styleSheet={{
+                                marginLeft: '10px'
+                                }} 
+                                src='https://i.imgur.com/7xop5KS.png' />
+                            <Image styleSheet={{
+                                marginLeft: '10px'
+                                }} 
+                                src='https://i.imgur.com/ADoTIrD.png' />
+                            <Image styleSheet={{
+                                marginLeft: '10px'
+                                }} 
+                                src='https://i.imgur.com/UWAGTTa.png' />
+                            <Image styleSheet={{
+                                marginLeft: '10px'
+                                }} 
+                                src='https://i.imgur.com/bfVST94.png' />
                     </Box>
                 </Box>
             </Box>
