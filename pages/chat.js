@@ -1,15 +1,24 @@
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 import React from 'react';
 import appConfig from '../config.json';
+import { useRouter } from 'next/router';
 import { createClient } from '@supabase/supabase-js';
+import { ButtonSendSticker, ButtonSendFile, ButtonSendLocation, ButtonSendPhoto } from '../src/components/ButtonSendSticker';
 
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzMwNzU0OCwiZXhwIjoxOTU4ODgzNTQ4fQ.SoWLEyZRSVhMRv_CbxeJUT1twgD4V9x_9W5d5C8oA3E';
 const SUPABASE_URL = 'https://ahwqahoeykmpzbkasphs.supabase.co';
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-
+function escutaMensagensEmTempoReal(adicionaMensagem) {
+    return supabaseClient.from('mensagens').on('INSERT', (respostaLive) => {
+        adicionaMensagem(respostaLive.new);
+    })
+    .subscribe();
+}
 
 export default function ChatPage() {
+    const roteamento = useRouter();
+    const usuarioLogado = roteamento.query.username;
     const [mensagem, setMensagem] = React.useState('');
     const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
 
@@ -17,22 +26,30 @@ export default function ChatPage() {
         supabaseClient.from('mensagens').select('*').order('id', { ascending: false }).then(({ data }) => {
             setListaDeMensagens(data)
         });
+        const subscription = escutaMensagensEmTempoReal((novaMensagem) => {
+            setListaDeMensagens((valorAtualDaLista) => {
+                return [
+                    novaMensagem,
+                    ...valorAtualDaLista,
+                ]
+            });
+        });
+
+        return () => {
+            subscription.unsubscribe();
+        }
     }, []);
 
     function handleNovaMensagem(novaMensagem) {
         const mensagem = {
-            // id: listaDeMensagens.length,
-            remetente: 'natcardozo',
+            remetente: usuarioLogado,
             texto: novaMensagem,
         }
 
-        supabaseClient.from('mensagens').insert([mensagem]).then(({ data }) => {
-            setListaDeMensagens([data[0], ...listaDeMensagens]);
-        })
+        supabaseClient.from('mensagens').insert([mensagem]).then(({ data }) => {})
 
         setMensagem('');
     }
-    
 
     return (
         <Box
@@ -125,22 +142,14 @@ export default function ChatPage() {
                             marginLeft: '5px'
                         }}
                         >
-                            <Image styleSheet={{
-                                marginLeft: '10px'
-                                }} 
-                                src='https://i.imgur.com/7xop5KS.png' />
-                            <Image styleSheet={{
-                                marginLeft: '10px'
-                                }} 
-                                src='https://i.imgur.com/ADoTIrD.png' />
-                            <Image styleSheet={{
-                                marginLeft: '10px'
-                                }} 
-                                src='https://i.imgur.com/UWAGTTa.png' />
-                            <Image styleSheet={{
-                                marginLeft: '10px'
-                                }} 
-                                src='https://i.imgur.com/bfVST94.png' />
+                            <ButtonSendPhoto />
+                            <ButtonSendLocation />
+                            <ButtonSendFile />
+                            <ButtonSendSticker 
+                                onStickerClick={(sticker) => {
+                                    handleNovaMensagem(':sticker: ' + sticker);
+                                }}
+                            />
                     </Box>
                 </Box>
             </Box>
@@ -247,7 +256,18 @@ function MessageList(props) {
                                     }}
                                 />
                         </Box>
-                        {mensagem.texto}
+                        {mensagem.texto.startsWith(':sticker:') 
+                            ? (
+                                <Image 
+                                    styleSheet={{
+                                        maxWidth: '100px',
+                                    }}
+                                    src={mensagem.texto.replace(':sticker:', '')} />
+                            )
+                            : (
+                                mensagem.texto
+                            )
+                        }
                     </Text>
                 )
             })}
