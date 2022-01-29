@@ -43,7 +43,6 @@ export default function ChatPage() {
 
     function handleNovaMensagem(novaMensagem) {
         const mensagem = {
-            open: false,
             remetente: usuarioLogado,
             texto: novaMensagem,
         }
