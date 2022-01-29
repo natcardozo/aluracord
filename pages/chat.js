@@ -4,6 +4,7 @@ import appConfig from '../config.json';
 import { useRouter } from 'next/router';
 import { createClient } from '@supabase/supabase-js';
 import { ButtonSendSticker, ButtonSendFile, ButtonSendLocation, ButtonSendPhoto } from '../src/components/ButtonSendSticker';
+import { ProfileHover } from '../src/components/ProfileHover';
 
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzMwNzU0OCwiZXhwIjoxOTU4ODgzNTQ4fQ.SoWLEyZRSVhMRv_CbxeJUT1twgD4V9x_9W5d5C8oA3E';
 const SUPABASE_URL = 'https://ahwqahoeykmpzbkasphs.supabase.co';
@@ -42,6 +43,7 @@ export default function ChatPage() {
 
     function handleNovaMensagem(novaMensagem) {
         const mensagem = {
+            open: false,
             remetente: usuarioLogado,
             texto: novaMensagem,
         }
@@ -176,6 +178,13 @@ function Header() {
 }
 
 function MessageList(props) {
+    const [isOpen, setOpenState] = React.useState('');
+    const [id, setId] = React.useState('');
+
+    React.useEffect(() => {
+
+    }, []);
+
     function Remover(mensagem) {
         const novaListaDeMensagens = props.mensagens.filter((mensagemRemover) =>{
             return mensagem.id !== mensagemRemover.id
@@ -224,6 +233,17 @@ function MessageList(props) {
                                     marginRight: '8px',
                                 }}
                                 src={`https://github.com/${mensagem.remetente}.png`}
+                                onMouseOver={(e) => {
+                                    setId(mensagem.id);
+                                    setOpenState(true);
+                                    console.log(mensagem)
+                                }}
+                            />
+                            <ProfileHover 
+                                mensagem={mensagem} 
+                                open={isOpen} 
+                                setOpen={() => setOpenState(!isOpen)} 
+                                id={id}
                             />
                             <Text tag="strong">
                                 {mensagem.remetente}
