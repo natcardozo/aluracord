@@ -236,7 +236,6 @@ function MessageList(props) {
                                 onMouseOver={(e) => {
                                     setId(mensagem.id);
                                     setOpenState(true);
-                                    console.log(mensagem)
                                 }}
                             />
                             <ProfileHover 
