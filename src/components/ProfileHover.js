@@ -28,7 +28,7 @@ export function ProfileHover(props) {
                     height: 'auto',
                     padding: '5px',
                     boxShadow: 'rgba(4, 4, 5, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.24) 0px 8px 16px 0px',
-                    zIndex: '1',
+                    zIndex: '100',
                     overflow: 'hidden'
                 }}
                 onMouseOut={() => props.setOpen(true)}
