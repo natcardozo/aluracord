@@ -69,11 +69,12 @@ export default function ChatPage() {
                     flex: 1,
                     boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
                     borderRadius: '5px',
-                    backgroundColor: appConfig.theme.colors.neutrals[700],
+                    backgroundColor: appConfig.theme.colors.neutrals[300],
                     height: '100%',
                     maxWidth: '95%',
                     maxHeight: '95vh',
                     padding: '32px',
+                    opacity: '90%'
                 }}
             >
                 <Header />
@@ -83,7 +84,7 @@ export default function ChatPage() {
                         display: 'flex',
                         flex: 1,
                         height: '80%',
-                        backgroundColor: appConfig.theme.colors.neutrals[600],
+                        backgroundColor: appConfig.theme.colors.neutrals[200],
                         flexDirection: 'column',
                         borderRadius: '5px',
                         padding: '16px',
@@ -98,6 +99,19 @@ export default function ChatPage() {
                             alignItems: 'center',
                         }}
                     >
+                        <a href={`https://github.com/${usuarioLogado}`}>
+                            <Image 
+                                styleSheet={{
+                                    maxWidth: '50px',
+                                    maxHeight: '50px',
+                                    borderRadius: '50%',
+                                    marginRight: '10px',
+                                    position: 'relative',
+                                    top: '-5px'
+                                }}
+                                src={`https://github.com/${usuarioLogado}.png`}
+                            />
+                        </a>
                         <TextField
                             value={mensagem}
                             onChange={(e) => {
@@ -118,16 +132,23 @@ export default function ChatPage() {
                                 resize: 'none',
                                 borderRadius: '5px',
                                 padding: '6px 8px',
-                                backgroundColor: appConfig.theme.colors.neutrals[800],
+                                backgroundColor: appConfig.theme.colors.neutrals[300],
                                 marginRight: '12px',
-                                color: appConfig.theme.colors.neutrals[200],
+                                color: appConfig.theme.colors.neutrals[800],
                             }}
                         />
                         <Button 
                             type='submit'
                             label='Enviar'
-                            variant='tertiary'
-                            colorVariant='neutral'
+                            styleSheet={{
+                                backgroundColor: appConfig.theme.colors.neutrals[200],
+                                color: appConfig.theme.colors.neutrals['000'],
+                                position: 'relative',
+                                top: '-5px',
+                                hover: {
+                                    backgroundColor: appConfig.theme.colors.primary[700]
+                                }
+                            }}
                             onClick={(e) => {
                                 e.preventDefault();
                                 handleNovaMensagem(mensagem);
@@ -163,11 +184,15 @@ function Header() {
         <>
             <Box styleSheet={{ width: '100%', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
                 <Text variant='heading5'>
-                    Chat
+                    Vamos trocar uma ideia?
                 </Text>
                 <Button
-                    variant='tertiary'
-                    colorVariant='neutral'
+                    styleSheet={{
+                        backgroundColor: appConfig.theme.colors.neutrals[300],
+                        hover: {
+                            backgroundColor: appConfig.theme.colors.primary[700]
+                        }
+                    }}
                     label='Logout'
                     href="/"
                 />
@@ -199,7 +224,7 @@ function MessageList(props) {
                 display: 'flex',
                 flexDirection: 'column-reverse',
                 flex: 1,
-                color: appConfig.theme.colors.neutrals["000"],
+                color: appConfig.theme.colors.neutrals[900],
                 marginBottom: '16px',
             }}
         >
@@ -213,7 +238,7 @@ function MessageList(props) {
                             padding: '6px',
                             marginBottom: '12px',
                             hover: {
-                                backgroundColor: appConfig.theme.colors.neutrals[700],
+                                backgroundColor: appConfig.theme.colors.neutrals[300],
                             }
                         }}
                     >
@@ -225,8 +250,8 @@ function MessageList(props) {
                         >
                             <Image
                                 styleSheet={{
-                                    width: '20px',
-                                    height: '20px',
+                                    width: '25px',
+                                    height: '25px',
                                     borderRadius: '50%',
                                     display: 'inline-block',
                                     marginRight: '8px',
@@ -243,47 +268,58 @@ function MessageList(props) {
                                 setOpen={() => setOpenState(!isOpen)} 
                                 id={id}
                             />
-                            <Text tag="strong">
+                            <Text 
+                                tag="strong"
+                                styleSheet={{
+                                    fontWeight: 'bold',
+                                    fontSize: '14px',
+                                    letterSpacing: '1px'
+                                }}
+                            >
                                 {mensagem.remetente}
                             </Text>
                             <Text
                                 styleSheet={{
                                     fontSize: '10px',
                                     marginLeft: '8px',
-                                    color: appConfig.theme.colors.neutrals[300],
+                                    color: appConfig.theme.colors.neutrals[700],
                                 }}
                                 tag="span"
                             >
                                 {(new Date().toLocaleDateString())}
                             </Text>
-                                <Button 
-                                    label='X'
-                                    type='button'
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        Remover(mensagem);
-                                    }}
-                                    styleSheet={{
-                                        height: '10px',
-                                        width: '10px',
-                                        marginLeft: '5%',
-                                        backgroundColor: appConfig.theme.colors.neutrals[800],
-                                        hover: {
-                                            backgroundColor: appConfig.theme.colors.neutrals[999],
-                                        }
-                                    }}
-                                />
+                            <Image 
+                                src='https://i.imgur.com/xoUo2lZ.png'
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    Remover(mensagem);
+                                }}
+                                styleSheet={{
+                                    marginRight: '100px',
+                                    marginLeft: 'auto',
+                                    hover: {
+                                        cursor: 'pointer',
+                                    }
+                                }}
+                            />
                         </Box>
                         {mensagem.texto.startsWith(':sticker:') 
                             ? (
                                 <Image 
                                     styleSheet={{
-                                        maxWidth: '100px',
+                                        maxWidth: '80px',
                                     }}
                                     src={mensagem.texto.replace(':sticker:', '')} />
                             )
                             : (
-                                mensagem.texto
+                                <Text
+                                    styleSheet={{
+                                        fontSize: '14px',
+                                        letterSpacing: '0.5px'
+                                    }}
+                                >
+                                    {mensagem.texto}
+                                </Text>
                             )
                         }
                     </Text>

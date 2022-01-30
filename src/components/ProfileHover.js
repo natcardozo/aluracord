@@ -23,7 +23,7 @@ export function ProfileHover(props) {
                     gridTemplateRows: '25% 25% 25% 25%',
                     borderRadius: '5px',
                     position: 'absolute',
-                    backgroundColor: appConfig.theme.colors.neutrals[800],
+                    backgroundColor: appConfig.theme.colors.neutrals[200],
                     width: '250px',
                     height: 'auto',
                     padding: '5px',
@@ -37,6 +37,8 @@ export function ProfileHover(props) {
                     styleSheet={{
                         textAlign: 'center',
                         textTransform: 'uppercase',
+                        fontWeight: 'bold',
+                        letterSpacing: '1px',
                         gridColumnStart: '1',
                         gridColumnEnd: '3',
                         gridRowStart: '1',
@@ -65,8 +67,9 @@ export function ProfileHover(props) {
                         tag="li"
                         styleSheet={{
                             display: 'inline',
-                            width: '70px',
+                            width: '60px',
                             borderRadius: '50%',
+                            marginLeft: '25px',
                             gridColumnStart: '1',
                             gridColumnEnd: '2',
                             gridRowStart: '1',
@@ -85,6 +88,8 @@ export function ProfileHover(props) {
                             gridRowStart: '1',
                             gridRowEnd: '2',
                             padding: '10px',
+                            fontSize: '14px',
+                            marginRight: '25px',
                             focus: {
                                 backgroundColor: appConfig.theme.colors.neutrals[600],
                             },
@@ -100,6 +105,8 @@ export function ProfileHover(props) {
                             gridRowStart: '2',
                             gridRowEnd: '3',
                             padding: '10px',
+                            fontSize: '14px',
+                            marginRight: '25px',
                             focus: {
                                 backgroundColor: appConfig.theme.colors.neutrals[600],
                             },

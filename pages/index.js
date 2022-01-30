@@ -21,18 +21,6 @@ function Titulo(props) {
     )
 }
 
-/* function HomePage() {
-    return (
-        <div>
-            <GlobalStyle />
-            <Titulo tag="h2">Boas vindas de volta!</Titulo>
-            <h2>Discord - Alura Matrix</h2>
-        </div>
-    )
-  }
-  
-  export default HomePage */
-
 export default function PaginaInicial() {
     const [githubUser, setGithubUser] = useState('');
     const roteamento = useRouter();
@@ -71,7 +59,9 @@ export default function PaginaInicial() {
                 {/* Formulário */}
                 <Box
                     as="form"
-                    onSubmit={function (e) {
+                    onSubmit={githubUser.length < 1 ? () => {
+                        roteamento.push(`/`)
+                    } : function (e) {
                         e.preventDefault()
                         roteamento.push(`/chat?username=${githubUser}`);
                     }}
@@ -135,7 +125,7 @@ export default function PaginaInicial() {
                         borderRadius: '50%',
                         marginBottom: '16px',
                     }}
-                    src={githubUser.length >= 2 ? `https://github.com/${githubUser}.png` : 'https://i.imgur.com/O1zaVNB.png'}
+                    src={githubUser.length >= 1 ? `https://github.com/${githubUser}.png` : 'https://i.imgur.com/O1zaVNB.png'}
                     />
                     <Text
                     variant="body4"
@@ -198,7 +188,7 @@ export default function PaginaInicial() {
                                 cursor: 'pointer',
                                 transform: 'rotate(360deg)',
                             }
-                        }} src={githubUser.length >= 2 ? `https://github.com/omariosouto.png` : 'https://i.imgur.com/O1zaVNB.png'} />
+                        }} src={githubUser.length >= 1 ? `https://github.com/omariosouto.png` : 'https://i.imgur.com/O1zaVNB.png'} />
                         <Image 
                         styleSheet={{
                             width: '50px',
@@ -210,7 +200,7 @@ export default function PaginaInicial() {
                                 cursor: 'pointer',
                                 transform: 'rotate(360deg)',
                             }
-                        }} src={githubUser.length >= 2 ? `https://github.com/peas.png` : 'https://i.imgur.com/O1zaVNB.png'} />
+                        }} src={githubUser.length >= 1 ? `https://github.com/peas.png` : 'https://i.imgur.com/O1zaVNB.png'} />
                         <Image 
                         styleSheet={{
                             width: '50px',
@@ -222,7 +212,7 @@ export default function PaginaInicial() {
                                 cursor: 'pointer',
                                 transform: 'rotate(360deg)',
                             }
-                        }} src={githubUser.length >= 2 ? `https://github.com/alura.png` : 'https://i.imgur.com/O1zaVNB.png'} />
+                        }} src={githubUser.length >= 1 ? `https://github.com/alura.png` : 'https://i.imgur.com/O1zaVNB.png'} />
                         <Image 
                         styleSheet={{
                             width: '50px',
@@ -234,7 +224,7 @@ export default function PaginaInicial() {
                                 cursor: 'pointer',
                                 transform: 'rotate(360deg)',
                             }
-                        }} src={githubUser.length >= 2 ? `https://github.com/rafaballerini.png` : 'https://i.imgur.com/O1zaVNB.png'} />
+                        }} src={githubUser.length >= 1 ? `https://github.com/rafaballerini.png` : 'https://i.imgur.com/O1zaVNB.png'} />
                         <Image 
                         styleSheet={{
                             width: '50px',
@@ -246,7 +236,7 @@ export default function PaginaInicial() {
                                 cursor: 'pointer',
                                 transform: 'rotate(360deg)',
                             }
-                        }} src={githubUser.length >= 2 ? `https://github.com/juunegreiros.png` : 'https://i.imgur.com/O1zaVNB.png'} />
+                        }} src={githubUser.length >= 1 ? `https://github.com/juunegreiros.png` : 'https://i.imgur.com/O1zaVNB.png'} />
                         <Image 
                         styleSheet={{
                             width: '50px',
@@ -258,7 +248,7 @@ export default function PaginaInicial() {
                                 cursor: 'pointer',
                                 transform: 'rotate(360deg)',
                             }
-                        }} src={githubUser.length >= 2 ? `https://github.com/loresgarcia.png` : 'https://i.imgur.com/O1zaVNB.png'} />
+                        }} src={githubUser.length >= 1 ? `https://github.com/loresgarcia.png` : 'https://i.imgur.com/O1zaVNB.png'} />
                     </Box>
                 </Box>
             </Box>
