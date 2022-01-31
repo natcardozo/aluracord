@@ -282,11 +282,12 @@ function MessageList(props) {
                                 styleSheet={{
                                     fontSize: '10px',
                                     marginLeft: '8px',
+                                    marginTop: '4px',
                                     color: appConfig.theme.colors.neutrals[700],
                                 }}
                                 tag="span"
                             >
-                                {(new Date().toLocaleDateString())}
+                                {(new Date(mensagem.created_at).toLocaleDateString())}
                             </Text>
                             <Image 
                                 src='https://i.imgur.com/xoUo2lZ.png'
